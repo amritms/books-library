@@ -1,0 +1,99 @@
+version: '3.7'
+
+services:
+  library_app:
+    build:
+      context: ./.docker
+      dockerfile: nginx.dockerfile
+    container_name: library_app
+    ports:
+      - 80:80
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html:delegated
+      - ./.docker/logs/nginx/:/var/log/nginx/
+    depends_on:
+      - library_php
+      - library_redis
+      - library_postgres
+      - library_mailhog
+    networks:
+      - library_app_network
+
+  library_postgres:
+    image: postgres:12-alpine
+    container_name: library_postgres
+    ports:
+      - ${DB_PORT}:5432
+    restart: unless-stopped
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
+    networks:
+      - library_app_network
+
+  library_php:
+    build:
+      context: ./.docker
+      dockerfile: php.dockerfile
+    container_name: library_php
+    volumes:
+      - ./:/var/www/html:delegated
+    networks:
+      - library_app_network
+
+  library_redis:
+    image: redis:alpine
+    container_name: library_redis
+    restart: unless-stopped
+    ports:
+      - 6379:6379
+    networks:
+      - library_app_network
+
+  library_composer:
+    build:
+      context: ./.docker
+      dockerfile: composer.dockerfile
+    container_name: library_composer
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - library_php
+    user: laravel
+    entrypoint: ['composer', '--ignore-platform-reqs']
+    networks:
+      - library_app_network
+
+  library_artisan:
+    build:
+      context: ./.docker
+      dockerfile: php.dockerfile
+    container_name: library_artisan
+    volumes:
+      - ./:/var/www/html:delegated
+    depends_on:
+      - library_postgres
+    working_dir: /var/www/html
+    user: laravel
+    entrypoint: ['php', '/var/www/html/artisan']
+    networks:
+      - library_app_network
+
+  library_mailhog:
+    image: mailhog/mailhog:latest
+    container_name: library_mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - library_app_network
+
+networks:
+  library_app_network:
+volumes:
+  data:
