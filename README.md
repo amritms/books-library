@@ -65,7 +65,7 @@ ___
 ***Note:*** For API request, send following header in each of the subsequent requests:
 ```json
 Accept: application/json
-Authorization: {{token}}
+Authorization: Bearer {{token}}
 ```
 ---
 
@@ -205,8 +205,7 @@ If you want list of available books send GET request to ```/api/books?status=AVA
         {
           "title": "Book title",
           "isbn": "0005534186",
-          "published_at": "2010-10-22",
-          "status": "AVAILABLE"
+          "published_at": "2010-10-22"
         }
         ```
 ***Response:***
@@ -227,3 +226,35 @@ If you want list of available books send GET request to ```/api/books?status=AVA
         ```
 
 ---
+###4. Book checkout
+***Note:*** You can only checkout Available books. Get list of available books from ```/api/books?status=AVAILABLE```
+
+***Request:***
+[POST]
++ Request (application/json)
+    + Headers
+
+            Location:  /api/checkout
+
+    + Body
+        ```json
+        {
+          "book_id": 1
+        }
+        ```
+***Response:***
++ Response 201 (application/json)
+
+    + Body
+        ```json
+        {
+            "message": "Book Checked out Successfully.",
+            "data": {
+                "id": 1,
+                "title": "Book title",
+                "isbn": "0005534186",
+                "published_at": "2010-10-22",
+                "status": "CHECKOUT_OUT"
+            }
+        }
+        ```

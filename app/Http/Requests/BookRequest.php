@@ -28,7 +28,6 @@ class BookRequest extends FormRequest
             'title' => 'required|string|max:255',
             'isbn' => ['required', 'min:10', new ISBN],
             'published_at' => 'required|date_format:Y-m-d',
-            'status' => 'required|in:CHECKED_OUT,AVAILABLE'
         ];
     }
 }

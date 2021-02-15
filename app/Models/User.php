@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = Hash::make($pass);
     }
+
+    public function books()
+    {
+        return $this->belongsToMany(Book::class, 'user_action_logs')->withPivot('action', 'created_at');
+    }
 }

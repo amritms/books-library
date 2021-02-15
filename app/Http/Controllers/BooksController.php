@@ -36,7 +36,10 @@ class BooksController extends Controller
      */
     public function store(BookRequest $request)
     {
-        $book = Book::create($request->validated());
+        $data = $request->validated();
+        $data['status'] = 'AVAILABLE';
+
+        $book = Book::create($data);
 
         return response()->json([
             'message' => 'Book Created Successfully.',
