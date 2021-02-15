@@ -15,7 +15,7 @@ class BooksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($status = 'ALL')
+    public function index($status = '')
     {
         $books = Book::query();
 

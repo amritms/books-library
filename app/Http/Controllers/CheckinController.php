@@ -15,8 +15,7 @@ class CheckinController extends Controller
         ]);
 
         auth()->user()->books()->attach([
-            $request->book_id =>
-                ['action' => 'CHECKIN']
+            $request->book_id => ['action' => 'CHECKIN']
         ]);
 
         $book = Book::find($request->book_id);
