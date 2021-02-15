@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\CheckinController;
 use App\Http\Controllers\CheckoutController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,4 +32,5 @@ Route::middleware('auth:sanctum')->group(function($route) {
     $route->get('/books', [BooksController::class, 'index']);
 
     $route->post('/checkout', CheckoutController::class);
+    $route->post('/checkin', CheckinController::class);
 });
