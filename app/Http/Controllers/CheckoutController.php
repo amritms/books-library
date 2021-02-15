@@ -25,6 +25,6 @@ class CheckoutController extends Controller
         return response()->json([
             'message' => 'Book Checked out Successfully.',
             'data' => new BookResource($book)
-        ], 201);
+        ], 200);
     }
 }

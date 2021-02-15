@@ -19,7 +19,7 @@ class CheckoutControllerTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('/api/checkout', ['book_id' => $book->id]);
 
-        $response->assertStatus(201);
+        $response->assertStatus(200);
 
         $this->assertDatabaseHas('user_action_logs', [
             'book_id' => $book->id,
