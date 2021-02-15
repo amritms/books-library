@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -74,7 +74,8 @@ class RegisterControllerTest extends TestCase
         $validData = [
             'name' => 'Amrit Man Shrestha',
             'email' => 'amritms@gmail.com',
-            'password' => 'pass1234'
+            'password' => 'pass1234',
+            'date_of_birth' => $this->faker->date('Y-m-d'),
         ];
 
         $data = array_merge($validData, $invalidData);
@@ -101,9 +102,9 @@ class RegisterControllerTest extends TestCase
             [['password' => []], 'password'],
             [['password' => 'asd'], 'password'],
             [['password' => 'asdfghhj'], 'password'],
-            [['password' => 'asdfghh1'], 'password'],
+            [['date_of_birth' => null], 'date_of_birth'],
+            [['date_of_birth' => ''], 'date_of_birth'],
+            [['date_of_birth' => '12-12-2001'], 'date_of_birth'],
         ];
     }
-
-
 }
