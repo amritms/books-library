@@ -1,6 +1,5 @@
 # Backend Dev Challenge - Book Library
 
----
 ## Assumptions
 1. Restful API for all endpoints.
 
@@ -22,7 +21,7 @@ Run the following commands to setup.
 1. php artisan test -> to run the test
 1. php artisan serve
 1. you can access the api at http://localhost:8000/api
-1. visit [API documentation](API.md)
+1. visit [API documentation](docs/API.md)
 
 ***If you want to use docker instead of local php server, given you have docker available***
 1. git clone git@github.com/amritms/book-library.git
@@ -33,12 +32,7 @@ Run the following commands to setup.
 1. docker-compose run --rm library_artisan migrate --seed
 1. docker-compose run --rm library_artisan test -> to run the test
 1. you can access the api at http://localhost/api
-1. visit [API documentation](API.md)
+1. visit [API documentation](docs/API.md)
 
-
-***Running Test***
-
-
-docker-compose library_artisan test
 ## API Documentation
-[API Documentation](API.md)
+[API Documentation](docs/API.md)

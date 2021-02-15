@@ -1,7 +1,6 @@
-## API Documentation
+# API Documentation
 
-___
-###1. Register User
+## 1. Register User
 
 ***Request:***
 [POST]
@@ -31,9 +30,9 @@ ___
             }
         }
         ```
----
+      
 
-###2. Login
+## 2. Login
 ***Request:***
 [POST]
 + Request (application/json)
@@ -66,10 +65,9 @@ ___
 Accept: application/json
 Authorization: Bearer {{token}}
 ```
----
 
 
-###3. Logout
+## 3. Logout
 ***Request:***
 [POST]
 + Request (application/json)
@@ -88,7 +86,7 @@ Authorization: Bearer {{token}}
         ```
 
 
-###4. Create a Book
+## 4. Create a Book
 ***Request:***
 [POST]
 + Request (application/json)
@@ -120,10 +118,9 @@ Authorization: Bearer {{token}}
             }
         }
         ```
+    
 
----
-
-###5. List all books
+## 5. List all books
 Request: [GET]
 + Request (application/json)
     + Headers
@@ -208,9 +205,7 @@ Request: [GET]
 If you want list of available books send GET request to ```/api/books?status=AVAILABLE```
 
 
----
-
-###6. Book checkout
+## 6. Book checkout
 ***Note:*** You can only checkout Available books. Get list of available books from ```/api/books?status=AVAILABLE```
 
 ***Request:***
@@ -243,7 +238,7 @@ If you want list of available books send GET request to ```/api/books?status=AVA
         }
         ```
 
-###7. Book checkin
+## 7. Book checkin
 ***Note:*** You can only checkout checked out books. Get list of available books from ```/api/books?status=CHECKED_OUT```
 
 ***Request:***
@@ -277,4 +272,4 @@ If you want list of available books send GET request to ```/api/books?status=AVA
         ```
 ---
 
-[Go back to Readme](README.md)
+[Go back to Readme](../README.md)
