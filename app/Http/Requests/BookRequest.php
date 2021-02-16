@@ -27,7 +27,7 @@ class BookRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'isbn' => ['required', 'min:10', new ISBN],
-            'published_at' => 'required|date_format:Y-m-d',
+            'published_at' => 'required|date_format:Y-m-d|before:today',
         ];
     }
 }

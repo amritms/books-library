@@ -75,7 +75,7 @@ class BooksControllerTest extends TestCase
         $validData = [
             'title' => 'To Kill a Mockingbird',
             'isbn' => '0978039912',
-            'published_at' => $this->faker->date('Y-m-d', date('Y-m-d', strtotime("-1 year"))),
+            'published_at' => date('Y-m-d', strtotime("-1 year")),
             'status' => 'AVAILABLE'
         ];
 
@@ -103,6 +103,7 @@ class BooksControllerTest extends TestCase
             [['published_at' => '2020-13-13'], 'published_at'],
             [['published_at' => '11-25-2020'], 'published_at'],
             [['published_at' => '12-12-2020'], 'published_at'],
+            [['published_at' =>  date('Y-m-d', strtotime("+1 year"))], 'published_at']
         ];
     }
 }
