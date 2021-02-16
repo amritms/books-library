@@ -1,6 +1,18 @@
 # API Documentation
 URL: http://99.79.122.227
 
+## Response Codes ##
+
+| Http status code| User message | 
+|---|---|
+| OK (200) | The action is completed. | 
+| CREATED (201) | Resource created. | 
+| RESET CONTENT (205) | User should be redirected to login page. | 
+| UNAUTHORIZED (401) | Guest trying to access the resource. | 
+| Not Found (404) | The specified resource is not found. | 
+| Unprocessable Entity (422) | Validation Error. | 
+| Internal Server Error (500) | There is some problem with server. |
+
 ## 1. Register User
 
 ***Request:***
@@ -196,7 +208,7 @@ Request: [GET]
               "path": "http://localhost/api/books",
               "per_page": 15,
               "to": 15,
-              "total": 33
+              "total": 20
               }
         }
         ```
@@ -228,7 +240,7 @@ If you want list of available books send GET request to ```/api/books?status=AVA
     + Body
         ```json
         {
-          "message": "Book Checked out Successfully.",
+          "message": "Book(s) Checked out Successfully.",
           "data": [
               {
                   "id": 1,
@@ -256,7 +268,7 @@ If you want list of available books send GET request to ```/api/books?status=AVA
         ```
 
 ## 7. Book checkin
-***Note:*** You can only checkout checked out books. Get list of available books from ```/api/books?status=CHECKED_OUT```
+***Note:*** You can only checkin checked out books. Get list of available books from ```/api/books?status=CHECKED_OUT```
 
 ***Request:***
 [POST]
@@ -268,7 +280,7 @@ If you want list of available books send GET request to ```/api/books?status=AVA
     + Body
         ```json
         {
-          "book_id": 1
+          "book_ids": [1,2]
         }
         ```
 ***Response:***
@@ -277,16 +289,26 @@ If you want list of available books send GET request to ```/api/books?status=AVA
     + Body
         ```json
         {
-            "message": "Book Checked in Successfully.",
-            "data": {
-                "id": 1,
-                "title": "Book title",
-                "isbn": "0005534186",
-                "published_at": "2010-10-22",
-                "status": "AVAILABLE"
-            }
+            "message": "Book(s) Checked in Successfully.",
+            "data": [
+                {
+                  "id": 1,
+                  "title": "Perspiciatis expedita rerum et est deleniti ipsam et. Qui accusamus provident quidem a. Ut debitis asperiores perspiciatis perferendis odit fugiat repellendus. Sit aut incidunt aut voluptatem incidunt quia.",
+                  "isbn": "0978195248",
+                  "published_at": "2006-09-22",
+                  "status": "AVAILABLE"
+              },
+              {
+                  "id": 2,
+                  "title": "Non mollitia reiciendis laborum. Blanditiis impedit esse eos et. Saepe voluptatem et aut. Maiores nesciunt expedita ipsum repellat dolore. Sit excepturi odio eos et. Vitae eum illo temporibus ex ut qui aut aperiam. Ullam ut in vel repellendus eaque.",
+                  "isbn": "0978110196",
+                  "published_at": "1998-05-02",
+                  "status": "AVAILABLE"
+              }
+            ]
         }
         ```
 ---
 
 [Go back to Readme](../README.md)
+
