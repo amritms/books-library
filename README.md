@@ -2,6 +2,7 @@
 
 ## Assumptions
 1. Restful API for all endpoints.
+1. No matter who returns the book, it will be logged in to original lender in user_action_logs table.
 
 ## Libraries/Tools used
 * Laravel 8
