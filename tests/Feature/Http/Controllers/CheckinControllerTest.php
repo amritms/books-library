@@ -14,12 +14,12 @@ class CheckinControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function user_can_checkout_book()
+    public function user_can_checkin_single_book()
     {
         $user = User::factory()->create();
         $book = $this->checkoutBook($user, 'CHECKED_OUT', 'CHECKOUT');
 
-        $response = $this->actingAs($user)->postJson('/api/checkin', ['book_id' => $book->id]);
+        $response = $this->actingAs($user)->postJson('/api/checkin', ['book_ids' => [$book->id]]);
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -30,8 +30,37 @@ class CheckinControllerTest extends TestCase
             'user_id' => $user->id,
             'action' => 'CHECKIN'
         ]);
+
+        $this->assertDatabaseCount('user_action_logs', 2);
     }
 
+    /** @test */
+    public function user_can_checkin_multiple_books()
+    {
+        $user = User::factory()->create();
+        $book1 = $this->checkoutBook($user, 'CHECKED_OUT', 'CHECKOUT');
+        $book2 = $this->checkoutBook($user, 'CHECKED_OUT', 'CHECKOUT');
+
+        $response = $this->actingAs($user)->postJson('/api/checkin', ['book_ids' => [$book1->id, $book2->id]]);
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $this->assertSame('AVAILABLE', $book1->fresh()->status);
+
+        $this->assertDatabaseHas('user_action_logs', [
+            'book_id' => $book1->id,
+            'user_id' => $user->id,
+            'action' => 'CHECKIN'
+        ]);
+
+        $this->assertDatabaseHas('user_action_logs', [
+            'book_id' => $book2->id,
+            'user_id' => $user->id,
+            'action' => 'CHECKIN'
+        ]);
+
+        $this->assertDatabaseCount('user_action_logs', 4);
+    }
     /** @test */
     public function guest_cannot_checkin_book()
     {

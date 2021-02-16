@@ -14,29 +14,36 @@ class CheckinController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $request->validate([
-            'book_id' => 'required|exists:books,id,status,CHECKED_OUT'
+        $data = $request->validate([
+            'book_ids' => 'required|array',
+            'book_ids.*' => 'required|exists:books,id,status,CHECKED_OUT'
         ]);
 
-        try{
+        try {
             DB::beginTransaction();
 
-            $user_action_log = UserActionLog::where('book_id', $request->book_id)->latest('id')->first();
+            $user_id = auth()->id();
+            $now = now();
+            $insert_data = collect($data['book_ids'])->map(function ($book_id) use ($user_id, $now) {
+                return [
+                    'user_id' => $user_id,
+                    'book_id' => $book_id,
+                    'action' => 'CHECKIN',
+                    'created_at' => $now,
+                ];
+            })->toArray();
 
-            UserActionLog::create([
-                'book_id' => $request->book_id,
-                'user_id' => $user_action_log->user_id,
-                'action' => 'CHECKIN'
-            ]);
+            UserActionLog::insert($insert_data);
 
-            $book = Book::find($request->book_id);
-            $book->update(['status' => 'AVAILABLE']);
+            $books = tap(Book::whereIn('id', $data['book_ids']), function ($query) {
+                $query->update(['status' => 'AVAILABLE']);
+            })->get();
 
             DB::commit();
 
             return response()->json([
                 'message' => 'Book Checked in Successfully.',
-                'data' => new BookResource($book)
+                'data' => BookResource::collection($books)
             ], Response::HTTP_OK);
         } catch (\Exception $exception) {
             DB::rollBack();
