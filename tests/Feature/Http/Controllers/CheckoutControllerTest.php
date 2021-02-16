@@ -13,7 +13,7 @@ class CheckoutControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function user_can_checkout_book()
+    public function user_can_checkout_books()
     {
         $user = User::factory()->create();
         $book1 = Book::factory()->create(['status' => 'AVAILABLE']);
@@ -34,6 +34,8 @@ class CheckoutControllerTest extends TestCase
             'user_id' => $user->id,
             'action' => 'CHECKOUT'
         ]);
+
+        $this->assertDatabaseCount('user_action_logs', 2);
     }
 
     /** @test */
