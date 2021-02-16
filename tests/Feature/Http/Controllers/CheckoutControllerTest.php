@@ -16,14 +16,21 @@ class CheckoutControllerTest extends TestCase
     public function user_can_checkout_book()
     {
         $user = User::factory()->create();
-        $book = Book::factory()->create(['status' => 'AVAILABLE']);
+        $book1 = Book::factory()->create(['status' => 'AVAILABLE']);
+        $book2 = Book::factory()->create(['status' => 'AVAILABLE']);
 
-        $response = $this->actingAs($user)->postJson('/api/checkout', ['book_id' => $book->id]);
+        $response = $this->actingAs($user)->postJson('/api/checkout', ['book_ids' => [$book1->id, $book2->id]]);
 
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertDatabaseHas('user_action_logs', [
-            'book_id' => $book->id,
+            'book_id' => $book1->id,
+            'user_id' => $user->id,
+            'action' => 'CHECKOUT'
+        ]);
+
+        $this->assertDatabaseHas('user_action_logs', [
+            'book_id' => $book2->id,
             'user_id' => $user->id,
             'action' => 'CHECKOUT'
         ]);

@@ -46,7 +46,7 @@ class BookFactory extends Factory
 
         return [
             'title' => $this->faker->text(255),
-            'isbn' => $this->faker->randomElement($isbns),
+            'isbn' => $this->faker->unique()->randomElement($isbns),
             'published_at' => $this->faker->date('Y-m-d', date('Y-m-d', strtotime("-1 year"))),
             'status' => 'AVAILABLE'
         ];

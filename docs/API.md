@@ -135,16 +135,16 @@ Request: [GET]
         "data": [
             {
               "id": 1,
-              "title": "Tenetur maxime laudantium dolores perferendis reiciendis asperiores sunt. Nihil neque deleniti blanditiis facilis sunt voluptatem. Perspiciatis unde beatae eligendi commodi vel rerum perferendis. Dolorum delectus iste quisquam dolorem.",
-              "isbn": "0441013597",
-              "published_at": "1983-05-17",
+              "title": "Perspiciatis expedita rerum et est deleniti ipsam et. Qui accusamus provident quidem a. Ut debitis asperiores perspiciatis perferendis odit fugiat repellendus. Sit aut incidunt aut voluptatem incidunt quia.",
+              "isbn": "0978195248",
+              "published_at": "2006-09-22",
               "status": "AVAILABLE"
           },
           {
               "id": 2,
-              "title": "Et temporibus sint quia. Voluptatum esse id saepe at asperiores. Aut et sequi nesciunt dolor. Quaerat expedita temporibus deserunt ad dignissimos et.",
-              "isbn": "0978194527",
-              "published_at": "1978-10-06",
+              "title": "Non mollitia reiciendis laborum. Blanditiis impedit esse eos et. Saepe voluptatem et aut. Maiores nesciunt expedita ipsum repellat dolore. Sit excepturi odio eos et. Vitae eum illo temporibus ex ut qui aut aperiam. Ullam ut in vel repellendus eaque.",
+              "isbn": "0978110196",
+              "published_at": "1998-05-02",
               "status": "CHECKED_OUT"
           },
          ...
@@ -219,7 +219,7 @@ If you want list of available books send GET request to ```/api/books?status=AVA
     + Body
         ```json
         {
-          "book_id": 1
+          "book_ids": [1,2,3]
         }
         ```
 ***Response:***
@@ -228,14 +228,30 @@ If you want list of available books send GET request to ```/api/books?status=AVA
     + Body
         ```json
         {
-            "message": "Book Checked out Successfully.",
-            "data": {
-                "id": 1,
-                "title": "Book title",
-                "isbn": "0005534186",
-                "published_at": "2010-10-22",
-                "status": "CHECKOUT_OUT"
-            }
+          "message": "Book Checked out Successfully.",
+          "data": [
+              {
+                  "id": 1,
+                  "title": "Perspiciatis expedita rerum et est deleniti ipsam et. Qui accusamus provident quidem a. Ut debitis asperiores perspiciatis perferendis odit fugiat repellendus. Sit aut incidunt aut voluptatem incidunt quia.",
+                  "isbn": "0978195248",
+                  "published_at": "2006-09-22",
+                  "status": "CHECKED_OUT"
+              },
+              {
+                  "id": 2,
+                  "title": "Non mollitia reiciendis laborum. Blanditiis impedit esse eos et. Saepe voluptatem et aut. Maiores nesciunt expedita ipsum repellat dolore. Sit excepturi odio eos et. Vitae eum illo temporibus ex ut qui aut aperiam. Ullam ut in vel repellendus eaque.",
+                  "isbn": "0978110196",
+                  "published_at": "1998-05-02",
+                  "status": "CHECKED_OUT"
+              },
+              {
+                  "id": 3,
+                  "title": "Vero et est labore dolore. Aperiam sit error aliquid. Ea minus maxime delectus voluptatem excepturi numquam illo qui.",
+                  "isbn": "0441013597",
+                  "published_at": "1999-10-16",
+                  "status": "CHECKED_OUT"
+              }
+          ]
         }
         ```
 
