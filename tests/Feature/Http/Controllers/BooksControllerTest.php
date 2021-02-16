@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class BooksControllerTest extends TestCase
@@ -26,7 +27,7 @@ class BooksControllerTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('/api/books', $data);
 
-        $response->assertStatus(201);
+        $response->assertStatus(Response::HTTP_CREATED);
 
         $response->assertJsonStructure([
             'message',

@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\Auth;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class RegisterControllerTest extends TestCase
@@ -23,7 +24,7 @@ class RegisterControllerTest extends TestCase
 
         $response = $this->postJson('/api/register', $data);
 
-        $response->assertStatus(201);
+        $response->assertStatus(Response::HTTP_CREATED);
 
         $response->assertJsonStructure([
             'message',
@@ -54,12 +55,11 @@ class RegisterControllerTest extends TestCase
             'date_of_birth' => $this->faker->date('Y-m-d'),
         ];
 
-        $response1 = $this->postJson('/api/register', $data);
-        $response1->assertStatus(201);
+        User::create($data);
 
         $response = $this->postJson('/api/register', $data);
 
-        $response->assertStatus(422);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertJsonMissingValidationErrors('name');
         $response->assertJsonMissingValidationErrors('password');
         $response->assertJsonValidationErrors('email');
@@ -82,7 +82,7 @@ class RegisterControllerTest extends TestCase
 
         $response = $this->postJson('/api/register', $data);
 
-        $response->assertStatus(422);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $response->assertJsonValidationErrors([$invalidParameter]);
     }
 

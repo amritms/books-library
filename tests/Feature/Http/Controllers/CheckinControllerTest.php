@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\User;
 use App\Models\UserActionLog;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class CheckinControllerTest extends TestCase
@@ -20,7 +21,7 @@ class CheckinControllerTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('/api/checkin', ['book_id' => $book->id]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
 
         $this->assertSame('AVAILABLE', $book->fresh()->status);
 
@@ -36,7 +37,7 @@ class CheckinControllerTest extends TestCase
     {
         $response = $this->postJson('/api/checkin', ['book_id' => 999]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     /** @test */
@@ -47,7 +48,7 @@ class CheckinControllerTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('/api/checkin', ['book_id' => $book->id]);
 
-        $response->assertStatus(422);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */
@@ -57,7 +58,7 @@ class CheckinControllerTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('/api/checkin', ['book_id' => 999]);
 
-        $response->assertStatus(422);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**

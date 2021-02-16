@@ -6,6 +6,7 @@ use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Models\UserActionLog;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -36,7 +37,7 @@ class CheckinController extends Controller
             return response()->json([
                 'message' => 'Book Checked in Successfully.',
                 'data' => new BookResource($book)
-            ], 200);
+            ], Response::HTTP_OK);
         } catch (\Exception $exception) {
             DB::rollBack();
 

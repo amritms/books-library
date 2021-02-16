@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Book;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class CheckoutControllerTest extends TestCase
@@ -19,7 +20,7 @@ class CheckoutControllerTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('/api/checkout', ['book_id' => $book->id]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
 
         $this->assertDatabaseHas('user_action_logs', [
             'book_id' => $book->id,
@@ -35,7 +36,7 @@ class CheckoutControllerTest extends TestCase
 
         $response = $this->postJson('/api/checkout', ['book_id' => $book->id]);
 
-        $response->assertStatus(401);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     /** @test */
@@ -46,7 +47,7 @@ class CheckoutControllerTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('/api/checkout', ['book_id' => $book->id]);
 
-        $response->assertStatus(422);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /** @test */
@@ -56,6 +57,6 @@ class CheckoutControllerTest extends TestCase
 
         $response = $this->actingAs($user)->postJson('/api/checkout', ['book_id' => 999]);
 
-        $response->assertStatus(422);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

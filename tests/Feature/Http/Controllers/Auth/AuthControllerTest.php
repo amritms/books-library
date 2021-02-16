@@ -5,6 +5,7 @@ namespace Tests\Feature\Http\Controllers\Auth;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class AuthControllerTest extends TestCase
@@ -21,7 +22,7 @@ class AuthControllerTest extends TestCase
             'password' => 'Pass1234'
         ]);
 
-        $response->assertStatus(200);
+        $response->assertStatus(Response::HTTP_OK);
 
         $user = User::where([
             'email'=> $user->email,
@@ -42,6 +43,6 @@ class AuthControllerTest extends TestCase
         ]);
 
         $this->assertGuest();
-        $response->assertStatus(422);
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }
