@@ -37,3 +37,11 @@ Run the following commands to setup.
 
 ## API Documentation
 [API Documentation](docs/API.md)
+
+## If it was a bigger real project
+If it was a bigger real project, doing the following would be better:
+1. Use Laravel fortify because it provides login, registration, password reset, email verification etc out of the box.
+1. Use Laravel sanctum SPA authentication instead of token based authentication because SAP authentication uses Laravel's built-in cookie based session authentication services which provides CSRF protection and session authentication.
+1. Use Repository Pattern while writing code to adhere SOLID principles.
+1. Write more tests.
+1. Implement Route 53 for DNS, AWS Lambda, RDS database with Multiple Availability Zones failover and Read replicas, S3 for storage, Elasticache for caching, SQS for queues, cloudwatch for logs as server infrastructure. 
