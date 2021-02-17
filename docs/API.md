@@ -1,5 +1,5 @@
 # API Documentation
-URL: http://99.79.122.227
+API_URL: http://99.79.122.227
 
 ## Response Codes ##
 
@@ -20,7 +20,7 @@ URL: http://99.79.122.227
 + Request (application/json)
     + Headers
 
-            Location:  /api/register
+            Location:  {{API_URL}}/api/register
 
     + Body
         ```json
@@ -51,7 +51,7 @@ URL: http://99.79.122.227
 + Request (application/json)
     + Headers
 
-            Location:  /api/login
+            Location:  {{API_URL}}/api/login
 
     + Body
         ```json
@@ -86,7 +86,7 @@ Authorization: Bearer {{token}}
 + Request (application/json)
     + Headers
     ```
-   Location:  /api/logout
+   Location:  {{API_URL}}/api/logout
     ```
 ***Response:***
 + Response 201 (application/json)
@@ -105,7 +105,7 @@ Authorization: Bearer {{token}}
 + Request (application/json)
     + Headers
 
-            Location:  /api/books
+            Location:  {{API_URL}}/api/books
 
     + Body
         ```json
@@ -138,7 +138,7 @@ Request: [GET]
 + Request (application/json)
     + Headers
 
-            Location:  /api/books
+            Location:  {{API_URL}}/api/books
 
 + Response 200 (application/json)
     + Body
@@ -215,7 +215,7 @@ Request: [GET]
 
 ***Note:***
 
-If you want list of available books send GET request to ```/api/books?status=AVAILABLE```
+If you want list of available books send GET request to ```{{API_URL}}/api/books?status=AVAILABLE```
 
 
 ## 6. Book checkout
@@ -226,7 +226,7 @@ If you want list of available books send GET request to ```/api/books?status=AVA
 + Request (application/json)
     + Headers
 
-            Location:  /api/checkout
+            Location:  {{API_URL}}/api/checkout
 
     + Body
         ```json
@@ -275,7 +275,7 @@ If you want list of available books send GET request to ```/api/books?status=AVA
 + Request (application/json)
     + Headers
 
-            Location:  /api/checkin
+            Location:  {{API_URL}}/api/checkin
 
     + Body
         ```json
